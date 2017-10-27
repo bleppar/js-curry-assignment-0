@@ -29,7 +29,7 @@ const cart =
 const itemRepeater =
   itemName =>
     count => {
-      // TODO
+      return Array(count).fill(itemName)
     }
 
 /**
@@ -39,8 +39,16 @@ const itemRepeater =
 const constructCarts =
   listings =>
     customers => {
-      // TODO
-    }
+      return [...customers]
+        .map(c => ({ customer: c.name,
+                     items: [...entries(c.shoppingList)]
+                     .map( a => itemRepeater(a[0])(a[1])).reduce((a, c) => a.concat(c))
+                     .map( a => ({
+                       name: a,
+                       price: listings.find( x => x.name === a).price }))
+        
+       }))
+      }
 
 module.exports = {
   listing,
